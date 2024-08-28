@@ -7,11 +7,9 @@ using namespace std;
 //
 //  Contructor
 //
-SudokuGrid::SudokuGrid(const string& fileName) {
-    // open SudokuGrid text file
-    // read from text file
-    // with dynamic memory allocation
-    
+SudokuGrid::SudokuGrid(const string& fileName) {  
+
+    // Dynamically allocates an array of arrays  
     grid = new int*[SIZE];
     for(int i = 0; i < SIZE; i++) {
         grid[i] = new int[SIZE];
@@ -25,7 +23,7 @@ SudokuGrid::SudokuGrid(const string& fileName) {
 //  Destructor
 //
 SudokuGrid::~SudokuGrid() {
-    //delete SudokuGrid
+    //deletes SudokuGrid
     for(int i = 0; i < SIZE; i++) {
         delete[] grid[i];
     }
@@ -82,14 +80,18 @@ void SudokuGrid::readFromFile(const string& fileName) {
 //  Checks if number is valid to input
 //
 bool SudokuGrid::checkValidation(int r, int c, int insertedNum){
+
+    // checks to see if the number is the row or the column
     for(int i = 0; i < SIZE; i++) {
         if(grid[r][i] == insertedNum || grid[i][c] == insertedNum)
             return false;
     }
 
+    // finds the leftmost and rightmost of a 3x3 grid
     int boxRowStart = (r / 3) * 3;
     int boxColStart = (c / 3) * 3;
 
+    // checks every box in it's respective 3x3 grid
     for(int i = boxRowStart; i < boxRowStart + 3; i++) {
         for(int j = boxColStart; j < boxColStart + 3; j++) {
             if(grid[i][j] == insertedNum) {
